@@ -1,7 +1,7 @@
 import pyautogui
 import time
 import numpy as np
-from PIL import ImageOps
+from PIL import ImageOps #for Windows users, import ImageGrab as well
 
 
 def start(): # starts game by pressing space
@@ -16,9 +16,10 @@ def jump(): # instructs dino to jump
 
 def imageGrab(x, y): # detects obstacles 
     checkBox = pyautogui.screenshot(region=(x+90, y, 300, 2)) #screenshot small rectangular box infront of dino, length 300px, height 2pixel 
+    #Windows users can do ImageGrab.grab(bbox = <region>) insted of above line
+    
     checkBox = ImageOps.grayscale(checkBox) #convert screenshot to grayscale
-    pixel_array = np.array(checkBox.getcolors()) #get list of colors in the image
-    #print(pixel_array.sum())
+    pixel_array = np.array(checkBox.getcolors()) #get list of colors in the image as an array
     return pixel_array.sum() #return the calculated sum. sum changes if an obstacle is detected, since colors in the screenshot change
 
 
